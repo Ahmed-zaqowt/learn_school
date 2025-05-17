@@ -23,7 +23,6 @@ Route::prefix('dashboard/')->name('dash.')->group(function(){
         Route::get('/getactive' , 'getactive')->name('getactive');
         Route::get('/getactivesection' , 'getactivesection')->name('getactive.section');
         Route::get('/getactivestage' , 'getactivestage')->name('getactive.stage');
-        Route::get('/create' , 'create')->name('create');
         Route::post('/add' , 'add')->name('add');
         Route::post('/changemaster' , 'changemaster')->name('changemaster');
         Route::post('/addsection' , 'addsection')->name('addsection');
@@ -32,13 +31,8 @@ Route::prefix('dashboard/')->name('dash.')->group(function(){
     Route::prefix('sections/')->controller(SectionController::class)->name('section.')->group(function(){
         Route::get('/' , 'index')->name('index');
         Route::get('/getdata' , 'getdata')->name('getdata');
-        Route::get('/getactive' , 'getactive')->name('getactive');
-        Route::get('/getactivesection' , 'getactivesection')->name('getactive.section');
-        Route::get('/getactivestage' , 'getactivestage')->name('getactive.stage');
-        Route::get('/create' , 'create')->name('create');
         Route::post('/add' , 'add')->name('add');
-        Route::post('/changemaster' , 'changemaster')->name('changemaster');
-        Route::post('/addsection' , 'addsection')->name('addsection');
+        Route::post('/changestatus' , 'changestatus')->name('changestatus');
     });
 
 

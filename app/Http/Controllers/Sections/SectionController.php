@@ -9,11 +9,14 @@ use Yajra\DataTables\Facades\DataTables;
 
 class SectionController extends Controller
 {
-     function index()  {
+    function index()
+    {
+        $section = Section::query()->where('status', 'inactive')->get();
+        // dd($section);
         return view('dashboard.sections.index');
-     }
+    }
 
-     function getdata(Request $request)
+    function getdata(Request $request)
     {
         $grades = Section::query();
         return DataTables::of($grades)
@@ -22,73 +25,99 @@ class SectionController extends Controller
 
 
                 return 'الشعبة ' . ' ' . $qur->name;
-
             })
             ->addColumn('action', function ($qur) {
-                if($qur->status == 'active'){
-                    return ' <div data-bs-toggle="modal" data-grade-id="'. $qur->id .'" data-grade="'.  $qur->tag  .'" data-bs-target="#sectionModal" class="d-flex align-items-center gap-3 fs-6 btn-add-section">
-                    <a href="javascript:;" class="text-success" data-bs-toggle="tooltip" data-bs-placement="bottom" ><i class="fadeIn animated bx bx-message-square-add"></i></a>
-                  </div>';
+                $section = Section::query()->where('status', 'active')->orderBy('id', 'desc')->first();
+                $sectiondisable = Section::query()->where('status', 'inactive')->first();
+                if ($section->id == $qur->id) {
+                    return ' <div data-id="' . $qur->id . '" class="form-check form-switch active-section-sw">
+                                 <input data-status="inactive" class="form-check-input" type="checkbox" role="switch" id="flexSwitchCheckChecked" checked>
+                               </div>';
                 }
 
-                return '-' ;
+                if ($sectiondisable->id == $qur->id) {
+                    return ' <div data-status="active" data-id="' . $qur->id . '" class="form-check form-switch active-section-sw">
+                                 <input class="form-check-input" type="checkbox" role="switch" id="flexSwitchCheckChecked">
+                               </div>';
+                }
 
+                return '-';
             })
             ->addColumn('status', function ($qur) {
-                        if($qur->status == 'active'){
-                            return 'مفعل' ;
-                        }
-                        return 'غير مفعل' ;
+                if ($qur->status == 'active') {
+                    return 'مفعل';
+                }
+                return 'غير مفعل';
             })
             ->make(true);
     }
 
-    function add(Request $request) {
-           //dd($request->all());
+    function add(Request $request)
+    {
+        //dd($request->all());
 
-           $newcount = (int)$request->count_section ;
-           $currentCount = Section::count();
-           if($newcount > $currentCount){
-           // dd($newcount  - $currentCount);
-               for($i = $currentCount + 1 ; $i <= $newcount ; $i++){
-                     Section::create([
-                        'name' => $i ,
-                        'status' => 'active' ,
-                     ]);
-               }
-
-
-               $sectionInAcive = Section::query()->where('status' , 'inactive')->get();
-               foreach($sectionInAcive as $s){
-                  $s->update([
-                    'status' => 'active' ,
-                  ]);
-               }
-           }elseif($newcount < $currentCount){
-              $limit = $currentCount - $newcount ;
-              $lastSections = Section::query()->orderBy('id' , 'desc')->limit($limit)->get();
-              // dd($lastSections);
-
-              foreach($lastSections as $l){
-                 $l->update([
-                    'status' => 'inactive' ,
-                 ]);
-              }
-           }elseif($newcount == $currentCount){
-            $sectionInAcive = Section::query()->where('status' , 'inactive')->get();
-               foreach($sectionInAcive as $e){
-                  $e->update([
-                    'status' => 'active' ,
-                  ]);
-               }
-           }
+        $newcount = (int)$request->count_section;
+        $currentCount = Section::count();
+        if ($newcount > $currentCount) {
+            // dd($newcount  - $currentCount);
+            for ($i = $currentCount + 1; $i <= $newcount; $i++) {
+                Section::create([
+                    'name' => $i,
+                    'status' => 'active',
+                ]);
+            }
 
 
+            $sectionInAcive = Section::query()->where('status', 'inactive')->get();
+            foreach ($sectionInAcive as $s) {
+                $s->update([
+                    'status' => 'active',
+                ]);
+            }
+        } elseif ($newcount < $currentCount) {
+            $limit = $currentCount - $newcount;
+            $lastSections = Section::query()->orderBy('id', 'desc')->limit($limit)->get();
+            // dd($lastSections);
 
-           return response()->json([
+            foreach ($lastSections as $l) {
+                $l->update([
+                    'status' => 'inactive',
+                ]);
+            }
+        } elseif ($newcount == $currentCount) {
+            $sectionInAcive = Section::query()->where('status', 'inactive')->get();
+            foreach ($sectionInAcive as $e) {
+                $e->update([
+                    'status' => 'active',
+                ]);
+            }
+        }
+
+
+
+        return response()->json([
             'success' => 'تمت العملية بنجاح'
         ]);
     }
 
+    function changestatus(Request $request)
+    {
+        $section = Section::query()->findOrFail($request->id);
 
+        if ($request->status == 'active') {
+            $section->update([
+                'status' => 'active'
+            ]);
+        } else {
+            $section->update([
+                'status' => 'inactive'
+            ]);
+        }
+
+
+
+        return response()->json([
+            'success' => 'تمت العملية بنجاح'
+        ]);
+    }
 }
