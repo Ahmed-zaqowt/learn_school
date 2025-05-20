@@ -19,7 +19,7 @@
 
                         <div class="container">
 
-                            <form method="post" id="add-form" class="add-form">
+                            <form method="post" action="{{ route('dash.section.add')  }}" id="add-form" class="add-form">
                                 <input type="hidden" name="_token" value="{{ csrf_token() }}">
                                 <div class="mb-4">
                                     <label>عدد الشعبة المرغوب بها :</label>
@@ -160,29 +160,9 @@
         });
 
 
-        $('.add-form').on('submit', function(e) {
-            e.preventDefault();
-            var data = new FormData(this);
-            //alert('ahmed')
-            // name=ali&gender=1&...
-            $.ajax({
-                url: "{{ route('dash.section.add') }}",
-                type: "post",
-                processData: false,
-                contentType: false,
-                data: data,
-                success: function(res) {
-                    // console.log(res.message);
-                    $('#add-modal').modal('hide');
-                    $('#add-form').trigger('reset');
-                    toastr.success(res.success)
-                    table.draw();
-                },
-            });
 
-        });
 
-        $(document).ready(function() {
+        /*$(document).ready(function() {
             $(document).on('change', '.active-section-sw', function(e) {
               var id = $(this).data('id');
                var status = $(this).data('status');
@@ -193,7 +173,7 @@
                     type: "post",
                     data:{
                         'id': id ,
-                        'status': status , 
+                        'status': status ,
                         '_token': "{{ csrf_token() }}" ,
                     },
                     success: function(res) {
@@ -204,8 +184,8 @@
                 });
             })
         });
-
-
+*/
+     
 
         /*
                     $('.master-checkbox').on('change', function() {

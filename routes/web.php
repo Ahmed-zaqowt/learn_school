@@ -4,6 +4,7 @@ use App\Http\Controllers\Grades\GradeController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\Sections\SectionController;
 use App\Http\Controllers\Stages\StageController;
+use App\Http\Controllers\Teachers\TeacherController;
 use Illuminate\Support\Facades\Route;
 
 
@@ -27,6 +28,20 @@ Route::prefix('dashboard/')->name('dash.')->group(function(){
         Route::post('/changemaster' , 'changemaster')->name('changemaster');
         Route::post('/addsection' , 'addsection')->name('addsection');
     });
+
+       Route::prefix('teachers/')->controller(TeacherController::class)->name('teacher.')->group(function(){
+        Route::get('/' , 'index')->name('index');
+        Route::get('/getdata' , 'getdata')->name('getdata');
+        Route::get('/getactive' , 'getactive')->name('getactive');
+        Route::get('/getactivesection' , 'getactivesection')->name('getactive.section');
+        Route::get('/getactivestage' , 'getactivestage')->name('getactive.stage');
+        Route::post('/add' , 'add')->name('add');
+        Route::post('/update' , 'update')->name('update');
+        Route::post('/delete' , 'delete')->name('delete');
+       // Route::post('/changemaster' , 'changemaster')->name('changemaster');
+       // Route::post('/addsection' , 'addsection')->name('addsection');
+    });
+
 
     Route::prefix('sections/')->controller(SectionController::class)->name('section.')->group(function(){
         Route::get('/' , 'index')->name('index');

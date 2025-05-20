@@ -61,42 +61,10 @@
       <a class="has-arrow" href="javascript:;">
         <div class="parent-icon"><i class="bi bi-award-fill"></i>
         </div>
-        <div class="menu-title">Components</div>
+        <div class="menu-title">المعلمين</div>
       </a>
       <ul>
-        <li> <a href="component-alerts.html"><i class="bi bi-circle"></i>Alerts</a>
-        </li>
-        <li> <a href="component-accordions.html"><i class="bi bi-circle"></i>Accordions</a>
-        </li>
-        <li> <a href="component-badges.html"><i class="bi bi-circle"></i>Badges</a>
-        </li>
-        <li> <a href="component-buttons.html"><i class="bi bi-circle"></i>Buttons</a>
-        </li>
-        <li> <a href="component-cards.html"><i class="bi bi-circle"></i>Cards</a>
-        </li>
-        <li> <a href="component-carousels.html"><i class="bi bi-circle"></i>Carousels</a>
-        </li>
-        <li> <a href="component-list-groups.html"><i class="bi bi-circle"></i>List Groups</a>
-        </li>
-        <li> <a href="component-media-object.html"><i class="bi bi-circle"></i>Media Objects</a>
-        </li>
-        <li> <a href="component-modals.html"><i class="bi bi-circle"></i>Modals</a>
-        </li>
-        <li> <a href="component-navs-tabs.html"><i class="bi bi-circle"></i>Navs & Tabs</a>
-        </li>
-        <li> <a href="component-navbar.html"><i class="bi bi-circle"></i>Navbar</a>
-        </li>
-        <li> <a href="component-paginations.html"><i class="bi bi-circle"></i>Pagination</a>
-        </li>
-        <li> <a href="component-popovers-tooltips.html"><i class="bi bi-circle"></i>Popovers & Tooltips</a>
-        </li>
-        <li> <a href="component-progress-bars.html"><i class="bi bi-circle"></i>Progress</a>
-        </li>
-        <li> <a href="component-spinners.html"><i class="bi bi-circle"></i>Spinners</a>
-        </li>
-        <li> <a href="component-notifications.html"><i class="bi bi-circle"></i>Notifications</a>
-        </li>
-        <li> <a href="component-avtars-chips.html"><i class="bi bi-circle"></i>Avatrs & Chips</a>
+        <li> <a href="{{ route('dash.teacher.index') }}"><i class="bi bi-circle"></i>جميع المعلمين</a>
         </li>
       </ul>
     </li>

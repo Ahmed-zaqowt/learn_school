@@ -9,6 +9,7 @@ use Yajra\DataTables\Facades\DataTables;
 
 class SectionController extends Controller
 {
+
     function index()
     {
         $section = Section::query()->where('status', 'inactive')->get();
@@ -35,11 +36,13 @@ class SectionController extends Controller
                                </div>';
                 }
 
-                if ($sectiondisable->id == $qur->id) {
-                    return ' <div data-status="active" data-id="' . $qur->id . '" class="form-check form-switch active-section-sw">
+                    if (@$sectiondisable->id == $qur->id) {
+                        return ' <div data-status="active" data-id="' . $qur->id . '" class="form-check form-switch active-section-sw">
                                  <input class="form-check-input" type="checkbox" role="switch" id="flexSwitchCheckChecked">
                                </div>';
-                }
+                    }
+
+
 
                 return '-';
             })
@@ -55,7 +58,7 @@ class SectionController extends Controller
     function add(Request $request)
     {
         //dd($request->all());
-
+       
         $newcount = (int)$request->count_section;
         $currentCount = Section::count();
         if ($newcount > $currentCount) {
