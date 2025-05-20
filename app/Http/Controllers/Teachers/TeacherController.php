@@ -20,6 +20,7 @@ class TeacherController extends Controller
     function getdata(Request $request)
     {
         $grades = Teacher::query();
+
         return DataTables::of($grades)
             ->addIndexColumn()
             ->addColumn('email', function ($qur) {
@@ -27,29 +28,24 @@ class TeacherController extends Controller
             })
             ->addColumn('status', function ($qur) {
                 if ($qur->status == 'active') {
-                    return 'مفعل';
+                    return '<span class="badge bg-success text-white">مفعل</span>
+';
                 }
-                return 'معطل';
+                return '<span class="badge bg-secondary text-white">معطل</span>
+';
             })
             ->addColumn('qual', function ($qur) {
                 return $qur->getQualByCode($qur->code);
             })
             ->addColumn('gender', function ($qur) {
                 if ($qur->gender == 'm') {
-                    return 'ذكر';
+                    return '<span class="badge bg-info text-white">ذكر</span>
+';
                 }
-                return 'انثى';
+                return '<span class="badge text-white" style="background-color:#c74375;">انثى</span>
+';
             })
             ->addColumn('action', function ($qur) {
-                /*     var name = button.data('name');
-                var email = button.data('email');
-                var phone = button.data('phone');
-                var qual = button.data('qual');
-                var spec = button.data('spec');
-                var gender = button.data('gender');
-                var status = button.data('status');
-                var date_of_birth = button.data('date-of-birth');
-                var hire_date = button.data('hire-date');*/
                 $data_attr = ' ';
                 $data_attr .= 'data-id="' . $qur->id . '" ';
                 $data_attr .= 'data-name="' . $qur->name . '" ';
@@ -62,18 +58,21 @@ class TeacherController extends Controller
                 $data_attr .= 'data-date-of-birth="' . $qur->date_of_birth . '" ';
                 $data_attr .= 'data-hire-date="' . $qur->hire_date .  '" ';
 
-                $action = '<div class="d-flex align-items-center gap-3 fs-6">
+                $action = '';
+                $action .= '<div class="d-flex align-items-center gap-3 fs-6">';
 
-                                <a ' . $data_attr . ' data-bs-toggle="modal" data-bs-target="#update-modal" class="text-warning update_btn" data-bs-toggle="tooltip" data-bs-placement="bottom" title="" data-bs-original-title="Edit info" aria-label="Edit"><i class="bi bi-pencil-fill "></i></a>
+                $action .= '<a ' . $data_attr . ' data-bs-toggle="modal" data-bs-target="#update-modal" class="text-warning update_btn" data-bs-toggle="tooltip" data-bs-placement="bottom" title="" data-bs-original-title="Edit info" aria-label="Edit"><i class="bi bi-pencil-fill "></i></a>';
+                if ($qur->status == 'active') {
+                    $action .= '     <a data-id="' . $qur->id . '"  data-url="' . route('dash.teacher.delete') . '" class="text-danger delete-btn" data-bs-toggle="tooltip" data-bs-placement="bottom" title="" data-bs-original-title="Delete" aria-label="Delete"><i class="bi bi-trash-fill"></i></a>';
+                } else {
+                    $action .= '     <a data-id="' . $qur->id . '"  data-url="' . route('dash.teacher.active') . '" class="text-success active-btn" data-bs-toggle="tooltip" data-bs-placement="bottom" title="" data-bs-original-title="Delete" aria-label="Delete"><i class="fadeIn animated bx bx-check-square"></i></a>';
+                }
 
-
-
-
-                                <a href="javascript:;" class="text-danger" data-bs-toggle="tooltip" data-bs-placement="bottom" title="" data-bs-original-title="Delete" aria-label="Delete"><i class="bi bi-trash-fill"></i></a>
-                              </div>';
+                $action .= '</div>';
 
                 return $action;
             })
+            ->rawColumns(['status', 'action', 'gender'])
             ->make(true);
     }
 
@@ -204,6 +203,33 @@ class TeacherController extends Controller
             'user_id' =>  $user->id
         ]);
 
+        return response()->json([
+            'success' => 'تمت العملية بنجاح'
+        ]);
+    }
+
+    function delete(Request $request)
+    {
+
+        $teacher = Teacher::query()->findOrFail($request->id);
+        if ($teacher) {
+            $teacher->update([
+                'status' => 'inactive',
+            ]);
+        }
+        return response()->json([
+            'success' => 'تمت العملية بنجاح'
+        ]);
+    }
+
+
+    function active(Request $request) {
+        $teacher = Teacher::query()->findOrFail($request->id);
+        if ($teacher) {
+            $teacher->update([
+                'status' => 'active',
+            ]);
+        }
         return response()->json([
             'success' => 'تمت العملية بنجاح'
         ]);

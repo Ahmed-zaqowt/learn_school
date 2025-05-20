@@ -32,14 +32,10 @@ Route::prefix('dashboard/')->name('dash.')->group(function(){
        Route::prefix('teachers/')->controller(TeacherController::class)->name('teacher.')->group(function(){
         Route::get('/' , 'index')->name('index');
         Route::get('/getdata' , 'getdata')->name('getdata');
-        Route::get('/getactive' , 'getactive')->name('getactive');
-        Route::get('/getactivesection' , 'getactivesection')->name('getactive.section');
-        Route::get('/getactivestage' , 'getactivestage')->name('getactive.stage');
         Route::post('/add' , 'add')->name('add');
         Route::post('/update' , 'update')->name('update');
         Route::post('/delete' , 'delete')->name('delete');
-       // Route::post('/changemaster' , 'changemaster')->name('changemaster');
-       // Route::post('/addsection' , 'addsection')->name('addsection');
+        Route::post('/active' , 'active')->name('active');
     });
 
 

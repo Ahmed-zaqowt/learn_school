@@ -39,6 +39,17 @@
             max-height: 70vh;
             overflow-y: auto;
         }
+
+          .swal-footer {
+            display: flex !important;
+            justify-content: center !important;
+            gap: 10px;
+        }
+
+        .swal-button {
+            min-width: 100px;
+        }
+
     </style>
     <title>@yield('title')</title>
 </head>
@@ -767,38 +778,38 @@
                     buttons: {
                         cancel: {
                             text: "إلغاء",
-                            value: false,
-                            visible: false,
+                            value: null,
+                            visible: true,
                             className: "custom-cancel-btn",
-                            closeModel: true,
+                            closeModal: true,
                         },
                         confirm: {
                             text: "احذف",
-                            value: false,
-                            visible: false,
+                            value: true,
+                            visible: true,
                             className: "custom-confirm-btn",
-                            closeModel: true,
+                            closeModal: true,
                         },
                     },
                     dangerMode: true,
                 }).then((willDelete) => {
-                if (willDelete) {
-                    $.ajax({
-                        url: url,
-                        type: "post",
-                        data: {
-                            id: id,
-                            _token: "{{ csrf_token() }}"
-                        },
-                        success: function(res) {
-                            toastr.success(res.success)
-                            table.draw();
-                        },
-                    });
-                } else {
-                    toastr.error('تم الغاء عملية الحذف')
-                }
-            });
+                    if (willDelete) {
+                        $.ajax({
+                            url: url,
+                            type: "post",
+                            data: {
+                                id: id,
+                                _token: "{{ csrf_token() }}"
+                            },
+                            success: function(res) {
+                                toastr.success(res.success)
+                                table.draw();
+                            },
+                        });
+                    } else {
+                        toastr.error('تم الغاء عملية الحذف')
+                    }
+                });
             })
         });
     </script>

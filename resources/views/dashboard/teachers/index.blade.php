@@ -1,6 +1,6 @@
 @extends('dashboard.master')
 @section('title')
-    مدرسة ليرن | صفحة الرئيسية للمستويات
+    مدرسة ليرن | صفحة الرئيسية للمعلمين
 @stop
 @section('content')
     <main class="page-content">
@@ -11,7 +11,7 @@
 
                 <div class="modal-content">
                     <div class="modal-header">
-                        <h5 class="modal-title" id="stagesModalLabel">المراحل الدراسية</h5>
+                        <h5 class="modal-title" id="stagesModalLabel">اضافة معلم جديد</h5>
                         <button type="button" class="btn-close ms-0" data-bs-dismiss="modal" aria-label="إغلاق"></button>
                     </div>
                     <form method="post" action="{{ route('dash.teacher.add') }}" id="add-form" class="add-form">
@@ -102,7 +102,7 @@
 
                 <div class="modal-content">
                     <div class="modal-header">
-                        <h5 class="modal-title" id="stagesModalLabel">المراحل الدراسية</h5>
+                        <h5 class="modal-title" id="stagesModalLabel">تعديل المعلم </h5>
                         <button type="button" class="btn-close ms-0" data-bs-dismiss="modal" aria-label="إغلاق"></button>
                     </div>
                     <form method="post" action="{{ route('dash.teacher.update') }}" id="update-form" class="update-form">
@@ -202,7 +202,7 @@
                     <div class="card-header bg-transparent">
                         <div class="row g-3 align-items-center">
                             <div class="col">
-                                <h5 class="mb-0">جميع المستويات</h5>
+                                <h5 class="mb-0">جميع المعلمين</h5>
                             </div>
                             <div class="col">
                                 <div class="d-flex align-items-center justify-content-end gap-3 cursor-pointer">
@@ -212,7 +212,7 @@
                     </div>
                     <div class="card-body">
                         <button class="btn btn-primary col-12 btn-add" data-bs-toggle="modal" data-bs-target="#add-modal">
-                            اضافة الشعب
+                            اضافة معلم
                         </button>
                     </div>
                 </div>
@@ -226,7 +226,7 @@
                     <div class="card-header bg-transparent">
                         <div class="row g-3 align-items-center">
                             <div class="col">
-                                <h5 class="mb-0">جميع الشعب</h5>
+                                <h5 class="mb-0">جميع المعلمين</h5>
                             </div>
                             <div class="col">
                                 <div class="d-flex align-items-center justify-content-end gap-3 cursor-pointer">
@@ -396,8 +396,54 @@
         });
 
 
+      $(document).ready(function() {
+            $(document).on('click', '.active-btn', function(e) {
+                e.preventDefault();
+                var button = $(this);
+                var id = button.data('id');
+                var url = button.data('url');
+                swal({
+                    title: "هل أنت متأكد من العملية ؟",
+                    text: "سيتم تفعيل العنصر المعطل .",
+                    icon: "warning",
+                    buttons: {
+                        cancel: {
+                            text: "إلغاء",
+                            value: null,
+                            visible: true,
+                            className: "custom-cancel-btn",
+                            closeModal: true,
+                        },
+                        confirm: {
+                            text: "احذف",
+                            value: true,
+                            visible: true,
+                            className: "custom-confirm-btn",
+                            closeModal: true,
+                        },
+                    },
+                    dangerMode: false,
+                }).then((willDelete) => {
+                    if (willDelete) {
+                        $.ajax({
+                            url: url,
+                            type: "post",
+                            data: {
+                                id: id,
+                                _token: "{{ csrf_token() }}"
+                            },
+                            success: function(res) {
+                                toastr.success(res.success)
+                                table.draw();
+                            },
+                        });
+                    } else {
+                        toastr.error('تم الغاء عملية التفعيل')
+                    }
+                });
+            })
+        });
 
-       
     </script>
 
 
