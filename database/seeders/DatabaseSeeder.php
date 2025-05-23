@@ -8,6 +8,7 @@ use App\Models\Grade;
 use App\Models\Section;
 use App\Models\Stage;
 use Illuminate\Database\Seeder;
+use Illuminate\Support\Facades\Hash;
 
 class DatabaseSeeder extends Seeder
 {
@@ -18,12 +19,12 @@ class DatabaseSeeder extends Seeder
     {
         // \App\Models\User::factory(10)->create();
 
-        // \App\Models\User::factory()->create([
-        //     'name' => 'Test User',
-        //     'email' => 'test@example.com',
-        // ]);
+         \App\Models\User::create([
+             'email' => 'ahmed@ahmed.com',
+             'password' => Hash::make('123456789'),
+         ]);
 
-        /*Stage::create([
+      /*  Stage::create([
             'name' => 'المرحلة الابتدائية' ,
             'tag' => 'p' ,
         ]);
@@ -35,11 +36,20 @@ class DatabaseSeeder extends Seeder
             'name' => 'المرحلة الثانوية' ,
             'tag' => 'h' ,
         ]);*/
-       // $stagep =Stage::getIdByTag('p');
 
+
+       // $stagep =Stage::getIdByTag('p');
+/*
         Section::create([
             'name' => '7' ,
         ]);
+*/
+
+
+
+
+
+
 
     }
 }

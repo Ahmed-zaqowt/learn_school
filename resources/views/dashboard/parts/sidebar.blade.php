@@ -72,15 +72,10 @@
       <a class="has-arrow" href="javascript:;">
         <div class="parent-icon"><i class="bi bi-cloud-arrow-down-fill"></i>
         </div>
-        <div class="menu-title">Icons</div>
+        <div class="menu-title">المواد الدراسية</div>
       </a>
       <ul>
-        <li> <a href="icons-line-icons.html"><i class="bi bi-circle"></i>Line Icons</a>
-        </li>
-        <li> <a href="icons-boxicons.html"><i class="bi bi-circle"></i>Boxicons</a>
-        </li>
-        <li> <a href="icons-feather-icons.html"><i class="bi bi-circle"></i>Feather Icons</a>
-        </li>
+        <li> <a href="{{ route('dash.subject.index') }}"><i class="bi bi-circle"></i>جميع المواد الدراسية </a>
       </ul>
     </li>
     <li class="menu-label">Forms & Tables</li>

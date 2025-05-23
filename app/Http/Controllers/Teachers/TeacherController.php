@@ -19,9 +19,26 @@ class TeacherController extends Controller
 
     function getdata(Request $request)
     {
-        $grades = Teacher::query();
+ // name , phone , email store in table teacher
+        $grades = Teacher::select('teachers.*' , 'users.email')->join('users' , 'users.id' , '=' , 'teachers.user_id');
 
         return DataTables::of($grades)
+            ->filter(function ($qur) use ($request) {
+                if($request->get('name')){
+                    // like %...% , %.. , ..%
+                 $qur->where('name' , 'like' , '%' .  $request->get('name') . '%');
+                }
+
+                if($request->get('phone' )){
+                 $qur->where('phone' , 'like' , '%' .  $request->get('phone') . '%');
+                }
+
+
+                if($request->get('email')){
+                     $qur->where('users.email' , 'like' , '%' . $request->get('email') . '%');
+                }
+
+            })
             ->addIndexColumn()
             ->addColumn('email', function ($qur) {
                 return $qur->user->email;
@@ -223,7 +240,8 @@ class TeacherController extends Controller
     }
 
 
-    function active(Request $request) {
+    function active(Request $request)
+    {
         $teacher = Teacher::query()->findOrFail($request->id);
         if ($teacher) {
             $teacher->update([
