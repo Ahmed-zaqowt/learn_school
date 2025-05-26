@@ -812,6 +812,18 @@
                 });
             })
         });
+
+
+        $('#search-btn').on('click', function(e) {
+            e.preventDefault();
+            table.draw();
+        });
+
+        $('#clear-btn').on('click', function(e) {
+            e.preventDefault();
+            $('.search-input').val("").trigger('change')
+            table.draw();
+        });
     </script>
 
     @yield('js')

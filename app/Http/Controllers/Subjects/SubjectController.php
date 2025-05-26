@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Subjects;
 
 use App\Http\Controllers\Controller;
 use App\Models\Grade;
+use App\Models\Lecture;
 use App\Models\Subject;
 use App\Models\Teacher;
 use Illuminate\Http\Request;
@@ -36,6 +37,10 @@ class SubjectController extends Controller
                             كتاب "' . $qur->title . '"  ' . $qur->grade->name . '
                         </a>';
             })
+            ->addColumn('lectures', function ($qur) {
+                return '    <a href="'.route('dash.subject.lectures' , $qur->id).'" class="btn btn-primary btn-sm"
+                            >عرض جميع المحاضرات</a>';
+            })
             ->addColumn('action', function ($qur) {
                 $data_attr = ' ';
                 /* $data_attr .= 'data-id="' . $qur->id . '" ';
@@ -60,7 +65,7 @@ class SubjectController extends Controller
 
                 return $action;
             })
-            ->rawColumns(['action', 'book'])
+            ->rawColumns(['action', 'book' , 'lectures'])
             ->make(true);
     }
 
@@ -107,6 +112,37 @@ class SubjectController extends Controller
         $path = public_path('uploads/books/' . $filename );
 
         return response()->download($path);
+    }
+
+      function lectures($id) {
+        $subject = Subject::query()->findOrFail($id);
+        return view('dashboard.subjects.lectures' , compact('subject'));
+    }
+
+     function getdataLectures(Request $request)
+    {
+              //dd($request->all());
+        $grades = Lecture::query()->where('subject_id' , $request->id);
+       //dd($grades);
+        return DataTables::of($grades)
+            ->filter(function ($qur) use ($request) {
+                if($request->get('title')){
+                    // like %...% , %.. , ..%
+                 $qur->where('title' , 'like' , '%' .  $request->get('title') . '%');
+                }
+            })
+            ->addIndexColumn()
+            ->addColumn('subject', function ($qur) {
+                return $qur->subject->title;
+            })
+            ->addColumn('teacher', function ($qur) {
+                return $qur->teacher->name;
+            })
+            ->addColumn('link', function ($qur) {
+                return '<a class="btn btn-info btn-sm" target="_blank" href="'. $qur->link .'">رابط المحاضرة</a>';
+            })
+            ->rawColumns(['status', 'action', 'gender' , 'link'])
+            ->make(true);
     }
 
 

@@ -388,16 +388,6 @@
         });
 
 
-        $('#search-btn').on('click', function(e) {
-            e.preventDefault();
-            table.draw();
-        });
-
-        $('#clear-btn').on('click', function(e) {
-            e.preventDefault();
-            $('.search-input').val("").trigger('change')
-            table.draw();
-        });
 
         $(document).ready(function() {
             $(document).on('click', '.update_btn', function(e) {
