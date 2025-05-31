@@ -22,7 +22,6 @@ return new class extends Migration
             $table->string('parent_phone')->unique();
             $table->enum('gender' , ['m' , 'fm']);
             $table->date('date_of_birth');
-
             $table->timestamps();
         });
     }

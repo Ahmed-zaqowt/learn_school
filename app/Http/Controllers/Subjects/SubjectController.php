@@ -11,8 +11,7 @@ use Illuminate\Http\Request;
 use Yajra\DataTables\Facades\DataTables;
 
 class SubjectController extends Controller
-{
-    function index()
+{ function index()
     {
         $teachers = Teacher::all();
         $grades = Grade::all();
