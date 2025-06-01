@@ -14,6 +14,6 @@ class Question extends Model
     }
 
     public function correctAnswer(){
-        return $this->hasOne(CorrectAnswer::class) ; 
+        return $this->hasOne(CorrectAnswer::class) ;
     }
 }

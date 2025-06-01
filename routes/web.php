@@ -87,7 +87,7 @@ Route::prefix('learnschool/')->group(function () {
         });
 
         // dashboard/teachers/panel/lectures
-        // dash.teacher.panel.lecture
+        // dash.teacher.lecture
         Route::prefix('teachers')->name('teacher.')->middleware('teacher')->group(function () {
             Route::prefix('lectures')->controller(LectureController::class)->name('lecture.')->group(function () {
                 Route::get('/', 'index')->name('index');
@@ -97,8 +97,11 @@ Route::prefix('learnschool/')->group(function () {
 
             Route::prefix('quizzs')->controller(QuizzController::class)->name('quizz.')->group(function () {
                 Route::get('/', 'index')->name('index');
+                Route::get('/create', 'create')->name('create');
+                Route::get('/edit/{id}', 'edit')->name('edit');
                 Route::get('/getdata', 'getdata')->name('getdata');
                 Route::post('/add', 'add')->name('add');
+                Route::post('/update/{id}', 'update')->name('update');
             });
         });
     });
