@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\DasboardTeachers\Lectures\LectureController as LecturesLectureController;
 use App\Http\Controllers\DasboardTeachers\Quizzs\QuizzController;
 use App\Http\Controllers\Grades\GradeController;
 use App\Http\Controllers\Lectures\LectureController;
@@ -14,7 +15,7 @@ use Illuminate\Support\Facades\Route;
 
 
 Route::get('/', function () {
-    return view('welcome');
+    return view('studets.index');
 });
 //url : learnschool/dashboard/grades
 // name : dash.grade.index
@@ -89,7 +90,7 @@ Route::prefix('learnschool/')->group(function () {
         // dashboard/teachers/panel/lectures
         // dash.teacher.lecture
         Route::prefix('teachers')->name('teacher.')->middleware('teacher')->group(function () {
-            Route::prefix('lectures')->controller(LectureController::class)->name('lecture.')->group(function () {
+            Route::prefix('lectures')->controller(LecturesLectureController::class)->name('lecture.')->group(function () {
                 Route::get('/', 'index')->name('index');
                 Route::get('/getdata', 'getdata')->name('getdata');
                 Route::post('/add', 'add')->name('add');
