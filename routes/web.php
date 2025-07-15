@@ -6,6 +6,7 @@ use App\Http\Controllers\Grades\GradeController;
 use App\Http\Controllers\Lectures\LectureController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\Sections\SectionController;
+use App\Http\Controllers\Site\Students\StudentController as StudentsStudentController;
 use App\Http\Controllers\Stages\StageController;
 use App\Http\Controllers\Students\StudentController;
 use App\Http\Controllers\Subjects\SubjectController;
@@ -14,11 +15,37 @@ use Illuminate\Support\Facades\Route;
 
 
 
-Route::get('/', function () {
-    return view('studets.index');
-});
+
 //url : learnschool/dashboard/grades
 // name : dash.grade.index
+
+
+
+Route::middleware(['student', 'auth'])->group(function () {
+    Route::get('/', [StudentsStudentController::class, 'index'])->name('panel');
+    Route::get('/subject/{id}', [StudentsStudentController::class, 'subject'])->name('subject');
+    Route::get('/quizz/{id}', [StudentsStudentController::class, 'quizz'])->name('quizz');
+    Route::post('/quizz', [StudentsStudentController::class, 'postquizz'])->name('postquizz');
+
+});
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 Route::prefix('learnschool/')->group(function () {
     Route::prefix('dashboard/')->middleware(['auth'])->name('dash.')->group(function () {
         // dashboard/teacher
@@ -108,9 +135,6 @@ Route::prefix('learnschool/')->group(function () {
     });
 });
 
-
-
-
 Route::get('/dashboard', function () {
     return view('dashboard');
 })->middleware(['auth', 'verified'])->name('dashboard');
@@ -120,5 +144,6 @@ Route::middleware('auth')->group(function () {
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 });
+
 
 require __DIR__ . '/auth.php';

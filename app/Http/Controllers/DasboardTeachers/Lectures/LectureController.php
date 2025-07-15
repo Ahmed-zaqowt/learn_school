@@ -4,6 +4,7 @@ namespace App\Http\Controllers\DasboardTeachers\Lectures;
 
 use App\Http\Controllers\Controller;
 use App\Models\Lecture;
+use App\Models\Subject;
 use Illuminate\Http\Request;
 use Yajra\DataTables\Facades\DataTables;
 
@@ -17,7 +18,7 @@ class LectureController extends Controller
     function getdata(Request $request)
     {
 
-        $grades = Lecture::query()->where('teacher_id', auth()->user()->id);
+        $grades = Lecture::query()->where('teacher_id' , auth()->user()->teacher->id);
 
         return DataTables::of($grades)
             ->filter(function ($qur) use ($request) {
@@ -73,16 +74,15 @@ class LectureController extends Controller
         $request->validate([
             'title'   => ['required', 'string', 'max:255'],
             'desc'  => ['required', 'string', 'min:20'],
-            'subject'  => ['required', 'exists:subjects,id'],
-            'teacher'   => ['required', 'exists:teachers,id'],
             'link'   => ['required', 'url'],
         ]);
 
+       $subject =  Subject::query()->where('teacher_id' ,auth()->user()->teacher->id  )->first();
         Lecture::create([
             'title' => $request->title,
             'desc' => $request->desc,
-            'subject_id' => $request->subject,
-            'teacher_id' => $request->teacher,
+            'subject_id' => $subject->id,
+            'teacher_id' => auth()->user()->teacher->id,
             'link' => $request->link,
         ]);
 

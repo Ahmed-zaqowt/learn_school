@@ -36,6 +36,10 @@ class AuthenticatedSessionController extends Controller
               return redirect()->route('dash.teacher.lecture.index');
         }
 
+         if($user->student){
+              return redirect()->route('panel');
+        }
+
         return redirect()->intended(RouteServiceProvider::HOME);
     }
 

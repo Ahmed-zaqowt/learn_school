@@ -16,7 +16,6 @@
             --subject-color: #f48fb1;
             --radius: 16px;
         }
-
         * {
             box-sizing: border-box;
         }
@@ -153,30 +152,68 @@
 
         <!-- معلومات الطالب -->
         <div class="card col-12">
-            <h2>معلومات الطالب</h2>
+            <h2>الكتب المرفقة</h2>
             <div class="student-info">
                 <div class="student-details">
-                    <p><strong>الاسم:</strong> {{ $user->student->first_name }} {{ $user->student->last_name }}</p>
-                    <p><strong>الصف:</strong> {{ $user->student->grade->name }} </p>
-                    <p><strong>الشعبة:</strong> {{ $user->student->section->name }}</p>
+                    <p></p>
                 </div>
             </div>
         </div>
 
-        <!-- المواد الدراسية -->
-        <div class="card col-12">
-            <h2>المواد الدراسية</h2>
-            <div class="subjects-grid">
-            @foreach ($subjects as $sub)
-<a href="{{ route('subject' , $sub->id) }}">
-<div class="subject-card"><i class="fas fa-calculator"></i><span>{{ $sub->title }}</span></div>
-</a>
+   <div class="card col-12 p-3 my-3">
+    <h2 class="mb-4">الأسئلة</h2>
+        <form method="post" action="{{ route('postquizz') }}">
 
+@csrf
+     <div class="card col-12 p-3 my-3">
+        <h2 class="mb-4">الأسئلة</h2>
 
-            @endforeach
+        @forelse ($quizz->questions as $index => $q)
+            <div class="mb-4">
+                <p class="fw-bold">{{ $index + 1 }}. {{ $q->text }}</p>
 
+                {{-- إدخال مخفي لتضمين معرف السؤال في المصفوفة --}}
+                <input type="hidden" name="answers[{{ $index }}][question_id]" value="{{ $q->id }}">
+
+                @if ($q->type === 'msq')
+                    @foreach ($q->options as $op)
+                        <div class="form-check">
+                            <input class="form-check-input" type="radio"
+                                   name="answers[{{ $index }}][selected_option]"
+                                   id="option_{{ $op->id }}"
+                                   value="{{ $op->id }}">
+                            <label class="form-check-label" for="option_{{ $op->id }}">
+                                {{ $op->text }}
+                            </label>
+                        </div>
+                    @endforeach
+
+                @elseif ($q->type === 'tf')
+                    <div class="form-check">
+                        <input class="form-check-input" type="radio"
+                               name="answers[{{ $index }}][selected_option]"
+                               id="true_{{ $q->id }}"
+                               value="true">
+                        <label class="form-check-label" for="true_{{ $q->id }}">صح</label>
+                    </div>
+                    <div class="form-check">
+                        <input class="form-check-input" type="radio"
+                               name="answers[{{ $index }}][selected_option]"
+                               id="false_{{ $q->id }}"
+                               value="false">
+                        <label class="form-check-label" for="false_{{ $q->id }}">خطأ</label>
+                    </div>
+                @endif
             </div>
-        </div>
+        @empty
+            <p class="text-muted">لا يوجد اختبارات بعد!</p>
+        @endforelse
+
+        <button type="submit" class="btn btn-primary">إرسال الإجابات</button>
+    </div>
+      </form>
+</div>
+
 
     </div>
 </body>

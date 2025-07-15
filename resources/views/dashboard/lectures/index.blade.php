@@ -4,11 +4,8 @@
 @stop
 @section('content')
     <main class="page-content">
-
-        {{-- add modal --}}
         <div class="modal fade" id="add-modal" tabindex="-1" aria-labelledby="stagesModalLabel" aria-hidden="true">
             <div class="modal-dialog modal-lg modal-dialog-centered modal-dialog-scrollable">
-
                 <div class="modal-content">
                     <div class="modal-header">
                         <h5 class="modal-title" id="stagesModalLabel">اضافة معلم جديد</h5>
@@ -19,20 +16,16 @@
 
                             <div class="container">
                                 <input type="hidden" name="_token" value="{{ csrf_token() }}">
-
                                 <div class="mb-4 form-group">
                                     <label> عنوان المحاضرة</label>
                                     <input name="title" class="form-control" placeholder="عنوان المحاضرة">
                                     <div class="invalid-feedback"></div>
-
                                 </div>
                                 <div class="mb-4 form-group">
                                     <label>وصف الحاضرة</label>
                                     <input name="desc" type="text" class="form-control"
                                         placeholder="وصف الحاضرة">
                                     <div class="invalid-feedback"></div>
-
-
                                 </div>
                                 <div class="mb-4 form-group">
                                     <label>المادة الدراسية</label>
@@ -44,7 +37,6 @@
                                     </select>
                                     <div class="invalid-feedback"></div>
                                 </div>
-
                                 <div class="mb-4 form-group">
                                     <label>مدرس المادة</label>
                                     <select name="teacher" class="form-control">
@@ -55,14 +47,11 @@
                                     </select>
                                     <div class="invalid-feedback"></div>
                                 </div>
-
-
                                 <div class="mb-4 form-group">
                                     <label>رابط الماحضرة</label>
                                     <input name="link" type="url" class="form-control" placeholder="رابط المحاضرة">
                                     <div class="invalid-feedback"></div>
                                 </div>
-
                             </div>
                         </div>
                         <div class="modal-footer mb-3">
@@ -72,8 +61,6 @@
                         </div>
                     </form>
                 </div>
-
-
             </div>
         </div>
         {{-- ///////////////////////////////////////// --}}
@@ -82,7 +69,6 @@
         {{-- update modal --}}
         <div class="modal fade" id="update-modal" tabindex="-1" aria-labelledby="stagesModalLabel" aria-hidden="true">
             <div class="modal-dialog modal-lg modal-dialog-centered modal-dialog-scrollable">
-
                 <div class="modal-content">
                     <div class="modal-header">
                         <h5 class="modal-title" id="stagesModalLabel">تعديل المعلم </h5>
@@ -129,7 +115,6 @@
                                         <option value="dr"> دكتوراه</option>
                                     </select>
                                     <div class="invalid-feedback"></div>
-
                                 </div>
                                 <div class="mb-4 form-group">
                                     <label>الجنس</label>
@@ -139,7 +124,6 @@
                                         <option value="fm">انثى</option>
                                     </select>
                                     <div class="invalid-feedback"></div>
-
                                 </div>
                                 <div class="mb-4 form-group">
                                     <label>الحالة</label>
@@ -149,15 +133,12 @@
                                         <option value="inactive">معطل</option>
                                     </select>
                                     <div class="invalid-feedback"></div>
-
                                 </div>
                                 <div class="mb-4 form-group">
                                     <label>تاريخ التعيين</label>
                                     <input name="hire_date" id="hire_date" type="date" class="form-control">
                                     <div class="invalid-feedback"></div>
-
                                 </div>
-
                                 <div class="mb-4 form-group">
                                     <label>تاريخ الميلاد</label>
                                     <input name="date_of_birth" id="date_of_birth" type="date" class="form-control">
@@ -172,12 +153,8 @@
                         </div>
                     </form>
                 </div>
-
-
             </div>
         </div>
-
-
 
         <div class="row">
             <div class="col-12 col-lg-12 col-xl-12 d-flex">
@@ -333,6 +310,7 @@
             language: {
                 url: "{{ asset('datatable_custom/i18n/ar.json') }}",
             }
+
         });
 
 

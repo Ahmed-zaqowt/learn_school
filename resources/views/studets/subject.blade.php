@@ -153,28 +153,27 @@
 
         <!-- معلومات الطالب -->
         <div class="card col-12">
-            <h2>معلومات الطالب</h2>
+            <h2>الكتب المرفقة</h2>
             <div class="student-info">
                 <div class="student-details">
-                    <p><strong>الاسم:</strong> {{ $user->student->first_name }} {{ $user->student->last_name }}</p>
-                    <p><strong>الصف:</strong> {{ $user->student->grade->name }} </p>
-                    <p><strong>الشعبة:</strong> {{ $user->student->section->name }}</p>
+                    <p></p>
                 </div>
             </div>
         </div>
 
-        <!-- المواد الدراسية -->
+        <!-- معلومات الطالب -->
         <div class="card col-12">
-            <h2>المواد الدراسية</h2>
-            <div class="subjects-grid">
-            @foreach ($subjects as $sub)
-<a href="{{ route('subject' , $sub->id) }}">
-<div class="subject-card"><i class="fas fa-calculator"></i><span>{{ $sub->title }}</span></div>
-</a>
-
-
-            @endforeach
-
+            <h2>الاختبارات</h2>
+            <div class="student-info">
+                <div class="student-details">
+                    @forelse ($subject->quizz as $q)
+                        <a href="{{ route('quizz' , $q->id) }}">
+                            <p>{{ $q->title }}</p>
+                        </a>
+                    @empty
+                        <p>لا يوجد اختبارات بعد !</p>
+                    @endforelse
+                </div>
             </div>
         </div>
 

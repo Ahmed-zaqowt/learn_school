@@ -14,6 +14,9 @@ class Grade extends Model
       return $this->belongsTo(Stage::class);
     }
 
+     function subjects() {
+      return $this->hasMany(Subject::class);
+     }
     public static function getStatusByCode($status) {
           if($status == '1'){
             return 'active' ;
