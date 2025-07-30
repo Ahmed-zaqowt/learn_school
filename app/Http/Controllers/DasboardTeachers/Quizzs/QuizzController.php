@@ -98,6 +98,7 @@ class QuizzController extends Controller
     {
         //  dd($request->all());
         $subject = Subject::query()->where('teacher_id', auth()->user()->id)->first();
+
         $qiuzz = Quizz::create([
             'title' => $request->title,
             'time' => $request->duration,

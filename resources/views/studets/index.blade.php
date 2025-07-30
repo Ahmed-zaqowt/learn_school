@@ -167,13 +167,12 @@
         <div class="card col-12">
             <h2>المواد الدراسية</h2>
             <div class="subjects-grid">
-            @foreach ($subjects as $sub)
-<a href="{{ route('subject' , $sub->id) }}">
-<div class="subject-card"><i class="fas fa-calculator"></i><span>{{ $sub->title }}</span></div>
-</a>
-
-
-            @endforeach
+                @foreach ($subjects as $sub)
+                    <a href="{{ route('subject', $sub->id) }}">
+                        <div class="subject-card"><i class="fas fa-calculator"></i><span>{{ $sub->title }}</span>
+                        </div>
+                    </a>
+                @endforeach
 
             </div>
         </div>

@@ -24,24 +24,10 @@ use Illuminate\Support\Facades\Route;
 Route::middleware(['student', 'auth'])->group(function () {
     Route::get('/', [StudentsStudentController::class, 'index'])->name('panel');
     Route::get('/subject/{id}', [StudentsStudentController::class, 'subject'])->name('subject');
-    Route::get('/quizz/{id}', [StudentsStudentController::class, 'quizz'])->name('quizz');
+    Route::get('/quizz/{id}', [StudentsStudentController::class, 'quizz'])->middleware('try')->name('quizz');
     Route::post('/quizz', [StudentsStudentController::class, 'postquizz'])->name('postquizz');
 
 });
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 
